@@ -1,6 +1,6 @@
 #!/bin/bash
 SERVER_IMAGE=${SERVER_IMAGE:-tb5zhh/icra-2023-server:latest}
-CLIENT_IMAGE=${CLIENT_IMAGE:-tb5zhh/icra-2023-client:latest}
+CLIENT_IMAGE=${CLIENT_IMAGE:-client-custom:test}
 CLI_EXE=$@
 
 xhost +
