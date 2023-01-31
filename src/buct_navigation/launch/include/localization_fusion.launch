@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="robot_localization" type="ekf_localization_node" name="odom_to_base_ekf"> 
+    <remap from="odometry/filtered" to="/odom" />
+    <rosparam command="load" file="$(find buct_navigation)/param/localization/odom_to_base.yaml" />
+  </node>
+</launch>

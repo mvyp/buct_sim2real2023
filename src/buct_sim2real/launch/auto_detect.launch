@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="rviz" default="true"/>
+
+  <!--node pkg="buct_detect" name="read_video" type="read_video.py" /-->
+  <node pkg="buct_detect" name="buct_aruco" type="buct_aruco.py" />
+  <node pkg="buct_sim2real" name="auto_detect" type="auto_detect.py" />
+    <!-- rviz -->
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find buct_sim2real)/rviz/auto_detect.rviz"/>
+</launch>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Bringup -->
+  <include file="$(find buct_navigation)/launch/navigation.launch"/>
+  
+  <!-- Main -->
+  <node pkg="buct_sim2real" type="main.py" name="buct_sim2real" output="screen" />
+  
+</launch>

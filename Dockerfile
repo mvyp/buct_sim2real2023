@@ -17,7 +17,8 @@ RUN apt-get update -q && \
 # Install extra dependencies with apt
 RUN apt-get update && \
      apt-get install -y --no-install-recommends \
-     ros-noetic-depthimage-to-laserscan ros-noetic-map-server python3-tf-conversions ros-noetic-global-planner && \
+     ros-noetic-depthimage-to-laserscan ros-noetic-map-server python3-tf-conversions ros-noetic-global-planner \
+     python3-catkin-tools openni2-utils && \
      rm -rf /var/lib/apt/lists/* && apt-get clean
 
 # Install extra dependencies with pip
@@ -30,7 +31,12 @@ ADD ep_teleop /opt/ep_ws/src/ep_teleop
 RUN source /opt/workspace/devel_isolated/setup.bash && catkin_make install --use-ninja -DSETUPTOOLS_DEB_LAYOUT=OFF
 ENV ENV_ROBOT_MODE=sim
 
+ADD iris_lama_ros/ /opt/iris_ws/src/
+WORKDIR /opt/iris_ws
+RUN catkin config --extend /opt/ros/noetic && catkin build
+
 # Add start script
+WORKDIR /opt/ep_ws
 ADD start.sh /opt/start.sh
 RUN echo "source /opt/ep_ws/devel/setup.bash" >> ~/.bashrc
 CMD /opt/ros/noetic/env.sh /opt/ep_ws/devel/env.sh /opt/start.sh

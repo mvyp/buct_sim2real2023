@@ -1,0 +1,11 @@
+<launch>
+    <node pkg="buct_navigation" type="multi_goals.py" respawn="false" name="multi_goals" output="screen">
+        <!--param name="goalListX" value="0.0017, 0.0966, 0.3695, 1.9732, 2.3293, 2.6125, 1.1275, 1.1211, 1.1205" /-->
+        <!--param name="goalListY" value="0.9649, 2.6168, 2.7878, 2.6603, 0.1382, -0.7969, 1.8853, 1.6779, 1.5891" /-->
+        <!--param name="goalListYaw" value="-0.6262, 89.3320, -87.1939, -1.1807, -179.7316, -4.7499, -1.2375, -1.2644, -1.1990" /-->
+        <param name="goalListX" value=" 0.0966, 1.9732, 2.6125" />
+        <param name="goalListY" value=" 2.6168, 2.6603, -0.7969" />
+        <param name="goalListYaw" value=" 89.3320,-1.1807, -4.7499" />
+    </node>
+</launch>
+

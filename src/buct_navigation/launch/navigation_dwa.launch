@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Arguments -->
+  <param name="/use_sim_time" value="false" />
+  <arg name="rviz" default="true"/>
+  <arg name="map_file" default="$(find buct_navigation)/maps/map.yaml"/>
+
+  <!-- bringup -->
+  <!--include file="$(find ep_bringup)/launch/bringup.launch"/-->
+  <!--include file="$(find ep_description)/launch/ep_description.launch"/-->
+  
+  <!-- Depth Image 2 Laser Scan -->
+  <include file="$(find buct_navigation)/launch/include/depthimage_to_laserscan.launch"/>
+  
+  <!-- Map server -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+
+  <!-- odometry -->
+  <include file="$(find buct_navigation)/launch/include/lsm_lidar.launch"/>
+  <include file="$(find buct_navigation)/launch/include/lsm_camera.launch"/>
+  <include file="$(find buct_navigation)/launch/include/localization_fusion.launch"/>
+
+  <!-- Localization -->
+  <node pkg="iris_lama_ros" type="loc2d_ros" name="loc2d_ros" output="screen">
+      <remap from="/scan" to="/rplidar/scan" />
+  </node>
+  
+  <!-- Move_Base -->
+  <include file="$(find buct_navigation)/launch/include/move_base_dwa.launch"/>
+  
+  <!-- rviz -->
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find buct_navigation)/rviz/navigation_dwa.rviz"/>
+          
+  <!-- Multi_Goals -->
+  <!--include file="$(find buct_navigation)/launch/include/multi_goals.launch"/-->
+  
+  <!-- Target Detection -->
+  <!--node pkg="buct_detect" name="detect_cube" type="detect_cube.py" /-->
+  <node pkg="buct_detect" name="buct_aruco" type="buct_aruco.py" />
+</launch>
