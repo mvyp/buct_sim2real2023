@@ -1,14 +1,21 @@
 # BUCT ICRA Robomaster Sim2Real Challenge
 
 ## 基本操作
-
 1. 修改容器||程序的方法为: 修改此文件夹之中的代码后执行以下命令. **注意直接修改容器内的文件,在容器停止后不会得到保存**.
   ```
   bash ./tao-restart-rebuild.sh
   ```
-2. 直接修改 `start.sh` 即可修改容器启动程序, 此文件为客户端容器启动的入口.
-3. 加入包的方法为修改 `Dockerfile` 文件中 `# Install extra dependencies with apt` 部分, 然后执行`1`之中的命令.
-4. 其他脚本包括启动停止容器在`scripts`之中. 如果想要在命令行之中想要接入容器运行`shell.sh`即可.
+1. 直接修改 `start.sh` 即可修改容器启动程序, 此文件为客户端容器启动的入口.
+2. 加入包的方法为修改 `Dockerfile` 文件中 `# Install extra dependencies with apt` 部分, 然后执行`1`之中的命令.
+3. 其他脚本包括启动停止容器在`scripts`之中. 如果想要在命令行之中想要接入容器运行`shell.sh`即可.
+4. **首次操作需要使用官方的镜像, 进行如下操作:**
+   ```
+   cd ~/buct_sim2real2023/
+   sudo ./scripts/first_launch.sh
+   sudo ./tao-restart-rebuild.sh 
+   sudo ./scripts/launch.sh 
+   ```
+
 ## Hardware - EP
 
 The [RoboMaster EP](https://www.dji.com/cn/robomaster-ep) is an autonomous vehicle platform equipped with a 4-axis palletizing robot arm and an encircling gripper for flexible gripping action, inspired by DJI's annual RoboMaster robotics competition. It provides Mecanum wheel omnidirectional movement, a fast wireless data link system including a real-time video stream, and an open SDK for further development and programming.
