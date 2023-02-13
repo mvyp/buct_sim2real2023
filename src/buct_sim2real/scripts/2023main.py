@@ -15,6 +15,7 @@ from math import pi
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 import random
+from std_msgs import String
 
 
 class buct_sim2real:
@@ -39,6 +40,8 @@ class buct_sim2real:
         self.move_position_pub = rospy.Publisher("cmd_position", Twist)
         self.arm_gripper_pub = rospy.Publisher("arm_gripper", Point)
         self.arm_position_pub = rospy.Publisher("arm_position", Pose)
+        self.acc_move_pub = rospy.Publisher("acc_move", String)
+
 
         self.tmp_target = Target()
 
@@ -47,7 +50,7 @@ class buct_sim2real:
             "/buct/target_list", TargetList, self.target_cb)
 
         self.true_target_sub = rospy.Subscribe(
-            "/buct/true_target_list", Target, self.true_target_cb)
+            "/buct/true_target_list", Target, self.true_target_cb, ququeue_size=1)
 
         self.move_base = actionlib.SimpleActionClient(
             "move_base", MoveBaseAction)
@@ -168,7 +171,13 @@ class buct_sim2real:
 
 
     def acc_move(self):
-        pass
+        start_flag = "Start"
+        self.acc_move_pub.publish(start_flag)
+        try:
+            acc_move = rospy.wait_for_message("acc_move",String,timeout=rospy.Duration(12))
+        except:
+            rospy.loginfo('failed to acc_move')
+            pass
 
 
     def done_cb(self, status, result):
