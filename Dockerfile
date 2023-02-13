@@ -17,8 +17,10 @@ RUN apt-get update -q && \
 # Install extra dependencies with apt
 RUN apt-get update && \
      apt-get install -y --no-install-recommends \
-     ros-noetic-depthimage-to-laserscan ros-noetic-map-server python3-tf-conversions ros-noetic-global-planner \
+     ros-noetic-depthimage-to-laserscan ros-noetic-map-server python3-tf-conversions ros-noetic-global-planner \ 
+     # libusb-1.0-0-dev libusb-dev libudev-dev\
      python3-catkin-tools openni2-utils && \
+     # sudo ldconfig && \
      rm -rf /var/lib/apt/lists/* && apt-get clean
 
 # Install extra dependencies with pip
@@ -34,6 +36,11 @@ ENV ENV_ROBOT_MODE=sim
 ADD iris_lama_ros/ /opt/iris_ws/src/
 WORKDIR /opt/iris_ws
 RUN catkin config --extend /opt/ros/noetic && catkin build
+
+# RUN sudo ln -s /usr/bin/vtk7 /usr/bin/vtk
+# ADD laser_scan_matcher_odometry/ /opt/lsm_ws/src/
+# WORKDIR /opt/lsm_ws
+# RUN source /opt/ros/noetic/setup.bash  && catkin_make
 
 # Add start script
 WORKDIR /opt/ep_ws

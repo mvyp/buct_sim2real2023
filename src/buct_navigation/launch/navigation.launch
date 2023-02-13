@@ -18,7 +18,7 @@
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
 
   <!-- Odometry -->
-  <include file="$(find buct_navigation)/launch/include/lsm_lidar.launch"/>
+  <!-- <include file="$(find buct_navigation)/launch/include/lsm_lidar.launch"/> -->
   <include file="$(find buct_navigation)/launch/include/localization_fusion.launch"/>
 
   <!-- Localization -->
